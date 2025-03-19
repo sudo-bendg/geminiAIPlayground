@@ -47,7 +47,7 @@ class GuessingGame:
 
         # Decide which characters should be redacted and which should not
         # All should be at first
-        self.redactedList = [True for i in range(len(self.blurbText))]
+        self.redactedList = [False if self.blurbText[i] == " " else True for i in range(len(self.blurbText))]
     
     def printRedacted(self):
         # Print the blurb with the chosen characters redacted
