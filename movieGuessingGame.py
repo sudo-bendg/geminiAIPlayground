@@ -19,8 +19,6 @@ class GuessingGame:
         )
         self.blurbText = blurbResponse.text
 
-        print(self.blurbText)
-
         # Decide which characters should be redacted and which should not
         # All should be at first
         self.redactedList = [True for i in range(len(self.blurbText))]
@@ -36,8 +34,25 @@ class GuessingGame:
             if self.redactedList[i]:
                 if random.random() < 0.2:
                     self.redactedList[i] = False
+    
+    def makeGuess(self):
+        userGuess = input("What movie do you think this is?")
+        if userGuess.lower() == self.movie.lower():
+            print("Well done! The movie was", self.movie)
+            self.redactedList = [False for i in range(len(self.blurbText))]
+            self.printRedacted()
+        else:
+            # Generate feedback for user
+            prompt = "Generate a message expressing whether or not a user's guess of the movie'" + userGuess + "' is close to the answer of the movie '" + self.movie + "'. Start your response with something like 'So close!' or 'Not at all!', and give a very slight clue. Do not explicitly reference any names or places. Give me the text of this message and nothing else."
+            feedbackResponse = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=prompt
+            )
+            responseText = feedbackResponse.text
+            print(responseText)
 
 game = GuessingGame()
 for i in range(10):
     game.printRedacted()
+    game.makeGuess()
     game.updateRedactedList()
