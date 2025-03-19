@@ -48,6 +48,8 @@ class GuessingGame:
         # Decide which characters should be redacted and which should not
         # All should be at first
         self.redactedList = [False if self.blurbText[i] == " " else True for i in range(len(self.blurbText))]
+
+        self.done = False
     
     def printRedacted(self):
         # Print the blurb with the chosen characters redacted
@@ -67,6 +69,7 @@ class GuessingGame:
             print("Well done! The movie was", self.movie)
             self.redactedList = [False for i in range(len(self.blurbText))]
             self.printRedacted()
+            self.done = True
         else:
             # Generate feedback for user
             prompt = "Generate a message expressing whether or not a user's guess of the movie'" + userGuess + "' is close to the answer of the movie '" + self.movie + "'. Start your response with something like 'So close!' or 'Not at all!', and give a very slight clue. Do not explicitly reference any names or places. Give me the text of this message and nothing else."
@@ -78,7 +81,7 @@ class GuessingGame:
             print(responseText)
 
 game = GuessingGame(movies)
-for i in range(10):
+while not game.done:
     game.printRedacted()
     game.makeGuess()
     game.updateRedactedList()
