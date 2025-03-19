@@ -6,9 +6,35 @@ from google import genai
 googleGeminiKey = os.getenv("GOOGLE_GEMINI_KEY")
 client = genai.Client(api_key=googleGeminiKey)
 
+# Movie List
+movies = [
+    "The Shawshank Redemption", "The Godfather", "The Dark Knight", "Pulp Fiction", "The Lord of the Rings: The Return of the King",
+    "Forrest Gump", "Inception", "Fight Club", "The Matrix", "Goodfellas",
+    "The Empire Strikes Back", "Interstellar", "The Lord of the Rings: The Fellowship of the Ring", "One Flew Over the Cuckoo's Nest", "The Lord of the Rings: The Two Towers",
+    "Se7en", "The Silence of the Lambs", "Saving Private Ryan", "The Green Mile", "Star Wars: A New Hope",
+    "Parasite", "The Lion King", "Gladiator", "Terminator 2: Judgment Day", "Back to the Future",
+    "The Prestige", "The Departed", "Whiplash", "The Usual Suspects", "The Pianist",
+    "The Intouchables", "The Good, the Bad and the Ugly", "Schindler's List", "Spirited Away", "Joker",
+    "Avengers: Infinity War", "Avengers: Endgame", "Django Unchained", "The Dark Knight Rises", "Inglourious Basterds",
+    "1917", "The Wolf of Wall Street", "Shutter Island", "The Grand Budapest Hotel", "Blade Runner 2049",
+    "No Country for Old Men", "There Will Be Blood", "Logan", "Mad Max: Fury Road", "The Social Network",
+    "The Revenant", "A Beautiful Mind", "Braveheart", "Casino", "The Big Lebowski",
+    "The Truman Show", "A Clockwork Orange", "Requiem for a Dream", "Inside Out", "Coco",
+    "Up", "Ratatouille", "Toy Story", "WALL-E", "Finding Nemo",
+    "The Incredibles", "Howl's Moving Castle", "Princess Mononoke", "Your Name", "Akira",
+    "Oldboy", "Train to Busan", "The Thing", "The Shining", "Psycho",
+    "Alien", "Aliens", "Jaws", "The Exorcist", "It",
+    "The Sixth Sense", "Hereditary", "Get Out", "A Quiet Place", "The Conjuring",
+    "John Wick", "John Wick: Chapter 2", "John Wick: Chapter 3 - Parabellum", "The Batman", "Spider-Man: No Way Home",
+    "Spider-Man: Into the Spider-Verse", "Guardians of the Galaxy", "Guardians of the Galaxy Vol. 2", "Doctor Strange", "Thor: Ragnarok",
+    "Iron Man", "Captain America: The Winter Soldier", "Black Panther", "X-Men: Days of Future Past", "Deadpool",
+    "Deadpool 2", "The Suicide Squad", "Zombieland", "The Lego Movie", "The Hunger Games"
+]
+
+
 class GuessingGame:
-    def __init__(self):
-        self.movieList = ["Holes", "Cars", "Toy Story"] # Films are explicitly stated in this list. This should be changed later
+    def __init__(self, movies):
+        self.movieList = movies # Films are explicitly stated in this list. This should be changed later
         self.movie = random.choice(self.movieList)
 
         # Generate movie blurb
@@ -51,7 +77,7 @@ class GuessingGame:
             responseText = feedbackResponse.text
             print(responseText)
 
-game = GuessingGame()
+game = GuessingGame(movies)
 for i in range(10):
     game.printRedacted()
     game.makeGuess()
