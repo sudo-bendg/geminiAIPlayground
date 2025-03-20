@@ -71,14 +71,18 @@ class GuessingGame:
             self.printRedacted()
             self.done = True
         else:
-            # Generate feedback for user
-            prompt = "Generate a message expressing whether or not a user's guess of the movie'" + userGuess + "' is close to the answer of the movie '" + self.movie + "'. Start your response with something like 'So close!' or 'Not at all!', and give a very slight clue. Do not explicitly reference any names or places. Give me the text of this message and nothing else."
-            feedbackResponse = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=prompt
-            )
-            responseText = feedbackResponse.text
-            print(responseText)
+            if random.random() < 0.4: # Only give the user a hint sometimes
+                # Generate feedback for user
+                prompt = "Generate a message expressing whether or not a user's guess of the movie'" + userGuess + "' is close to the answer of the movie '" + self.movie + "'. Start your response with something like 'So close!' or 'Not at all!', and give a very slight clue. Do not explicitly reference any names or places. Give me the text of this message and nothing else."
+                feedbackResponse = client.models.generate_content(
+                    model="gemini-2.0-flash",
+                    contents=prompt
+                )
+                responseText = feedbackResponse.text
+                print(responseText)
+            else: # The rest of the time choose one of these stock phrases
+                responseText = random.choice(["Not quite...", "That is not correct.", "Nope!"])
+                print(responseText)
 
 game = GuessingGame(movies)
 while not game.done:
